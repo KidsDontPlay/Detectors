@@ -2,47 +2,34 @@ package mrriegel.detectors.gui;
 
 import java.io.IOException;
 
-import com.google.common.collect.Lists;
-
 import mrriegel.detectors.Detectors;
 import mrriegel.detectors.network.ButtonMessage;
 import mrriegel.detectors.network.PacketHandler;
 import mrriegel.detectors.tile.TileBase;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.inventory.Container;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
+
+import com.google.common.collect.Lists;
 
 public class AbstractGui extends GuiContainer {
 
-	public static final int plus = 0, minus = 1, all = 2, visible = 3;
+	public static final int PLUSRANGE = 0, MINUSRANGE = 1, ALL = 2, VISIBLE = 3, MOB = 4, PLUSNUM = 5, MINUSNUM = 6;
 
-	private static final ResourceLocation GuiTextures = new ResourceLocation(Detectors.MODID + ":textures/gui/gui.png");
-	private GuiButton plusButton, minusButton, allButton, visibleButton;
-	private TileBase tile;
-	BlockPos pos;
+	protected static final ResourceLocation GuiTextures = new ResourceLocation(Detectors.MODID + ":textures/gui/gui.png");
+	protected GuiButton plusRangeButton, minusRangeButton, allButton, visibleButton, mobButton, plusNumButton, minusNumButton;
+	protected TileBase tile;
 
-	public AbstractGui(Container inventorySlotsIn, BlockPos pos) {
-		super(inventorySlotsIn);
-		this.pos = pos;
-	}
-
-	@Override
-	public void initGui() {
-		super.initGui();
-		allButton = new GuiButton(all, guiLeft + 27, guiTop + 3, 20, 20, "");
-		buttonList.add(allButton);
-		visibleButton = new GuiButton(visible, guiLeft + 3, guiTop + 27, 20, 20, "");
-		buttonList.add(visibleButton);
-		tile = (TileBase) mc.theWorld.getTileEntity(pos);
+	public AbstractGui(AbstractContainer container) {
+		super(container);
+		tile = container.tile;
 	}
 
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-		String s = tile == null ? "Hosenträger" : mc.theWorld.getBlockState(tile.getPos()).getBlock().getLocalizedName();
+		String s = tile == null ? "Birdplane" : mc.theWorld.getBlockState(tile.getPos()).getBlock().getLocalizedName();
 		this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6, 4210752);
 		this.fontRendererObj.drawString(mc.thePlayer.inventory.getDisplayName().getUnformattedText(), 8, this.ySize - 96 + 2, 4210752);
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
@@ -51,11 +38,31 @@ public class AbstractGui extends GuiContainer {
 			this.drawTexturedModalRect(allButton.xPosition - guiLeft, allButton.yPosition - guiTop, 176 + (!tile.isAll() ? 0 : 20), 18, 20, 20);
 		if (visibleButton != null)
 			this.drawTexturedModalRect(visibleButton.xPosition - guiLeft, visibleButton.yPosition - guiTop, 176 + (!tile.isVisible() ? 0 : 20), 38, 20, 20);
+		if (mobButton != null)
+			this.drawTexturedModalRect(mobButton.xPosition - guiLeft, mobButton.yPosition - guiTop, 176 + (tile.getKind().ordinal() * 20), 58, 20, 20);
 
+		if (plusRangeButton != null && plusRangeButton.isMouseOver())
+			drawHoveringText(Lists.newArrayList(I18n.format("tooltip.detectors.range+")), mouseX - guiLeft, mouseY - guiTop);
+		if (minusRangeButton != null && minusRangeButton.isMouseOver())
+			drawHoveringText(Lists.newArrayList(I18n.format("tooltip.detectors.range-")), mouseX - guiLeft, mouseY - guiTop);
 		if (allButton != null && allButton.isMouseOver())
-			drawHoveringText(Lists.newArrayList(tile.isAll() ? "all" : "one"), mouseX - guiLeft, mouseY - guiTop);
+			drawHoveringText(Lists.newArrayList(I18n.format("tooltip.detectors.all_" + tile.isAll())), mouseX - guiLeft, mouseY - guiTop);
 		if (visibleButton != null && visibleButton.isMouseOver())
-			drawHoveringText(Lists.newArrayList(tile.isVisible() ? "visible" : "invisible"), mouseX - guiLeft, mouseY - guiTop);
+			drawHoveringText(Lists.newArrayList(I18n.format("tooltip.detectors.visible_" + tile.isVisible())), mouseX - guiLeft, mouseY - guiTop);
+		if (mobButton != null && mobButton.isMouseOver())
+			drawHoveringText(Lists.newArrayList(I18n.format("tooltip.detectors.kind_" + tile.getKind().ordinal())), mouseX - guiLeft, mouseY - guiTop);
+		if (plusNumButton != null && plusNumButton.isMouseOver())
+			drawHoveringText(Lists.newArrayList(I18n.format(plusNum())), mouseX - guiLeft, mouseY - guiTop);
+		if (minusNumButton != null && minusNumButton.isMouseOver())
+			drawHoveringText(Lists.newArrayList(I18n.format(minusNum())), mouseX - guiLeft, mouseY - guiTop);
+	}
+
+	protected String plusNum() {
+		return "plus";
+	}
+
+	protected String minusNum() {
+		return "minus";
 	}
 
 	@Override
@@ -70,23 +77,35 @@ public class AbstractGui extends GuiContainer {
 	@Override
 	protected void actionPerformed(GuiButton button) throws IOException {
 		switch (button.id) {
-		case AbstractGui.plus:
+		case AbstractGui.PLUSRANGE:
+			tile.setRange(tile.getRange() + (isShiftKeyDown() ? 10 : 1));
+			break;
+		case AbstractGui.MINUSRANGE:
+			tile.setRange(tile.getRange() - (isShiftKeyDown() ? 10 : 1));
+			if (tile.getRange() < 0)
+				tile.setRange(0);
+			break;
+		case AbstractGui.ALL:
+			tile.setAll(!tile.isAll());
+			break;
+		case AbstractGui.VISIBLE:
+			tile.setVisible(!tile.isVisible());
+			break;
+		case AbstractGui.MOB:
+			tile.setKind(tile.getKind().next());
+			break;
+		case AbstractGui.PLUSNUM:
 			tile.setNumber(tile.getNumber() + (isShiftKeyDown() ? 10 : 1));
 			break;
-		case AbstractGui.minus:
+		case AbstractGui.MINUSNUM:
 			tile.setNumber(tile.getNumber() - (isShiftKeyDown() ? 10 : 1));
 			if (tile.getNumber() < 0)
 				tile.setNumber(0);
-			break;
-		case AbstractGui.all:
-			tile.setAll(!tile.isAll());
-			break;
-		case AbstractGui.visible:
-			tile.setVisible(!tile.isVisible());
 			break;
 		default:
 			break;
 		}
 		PacketHandler.INSTANCE.sendToServer(new ButtonMessage(tile.getPos(), button.id, isShiftKeyDown()));
 	}
+
 }

@@ -2,11 +2,13 @@ package mrriegel.detectors.tile;
 
 import mrriegel.detectors.block.BlockBase;
 import net.minecraft.block.Block;
-import net.minecraft.block.IGrowable;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 
-public class TileCropDetector extends TileBase implements ITickable {
+public class TileBlockDetector extends TileBase implements ITickable {
 
 	@Override
 	public void update() {
@@ -17,16 +19,13 @@ public class TileCropDetector extends TileBase implements ITickable {
 		blockPosSet.remove(pos);
 		boolean minimum = false;
 		for (BlockPos p : blockPosSet) {
-			Block b = worldObj.getBlockState(p).getBlock();
-			if (b instanceof IGrowable) {
-				minimum = true;
-				if (all && ((IGrowable) b).canGrow(worldObj, p, worldObj.getBlockState(p), false)) {
-					validAll = false;
-					break;
-				} else if (!all && !((IGrowable) b).canGrow(worldObj, p, worldObj.getBlockState(p), false)) {
-					validOne = true;
-					break;
-				}
+			minimum = true;
+			if (all && !stateEqual(worldObj.getBlockState(p))) {
+				validAll = false;
+				break;
+			} else if (!all && stateEqual(worldObj.getBlockState(p))) {
+				validOne = true;
+				break;
 			}
 		}
 		validAll = validAll && minimum;
@@ -38,6 +37,15 @@ public class TileCropDetector extends TileBase implements ITickable {
 		}
 	}
 
+	private boolean stateEqual(IBlockState state) {
+		if (stack != null && stack.getItem() instanceof ItemBlock) {
+			Block in = ((ItemBlock) stack.getItem()).block;
+			IBlockState x = in.onBlockPlaced(worldObj, BlockPos.ORIGIN, EnumFacing.NORTH, 0, 0, 0, stack.getItem().getMetadata(stack.getItemDamage()), null);
+			return x.equals(state);
+		}
+		return false;
+	}
+
 	@Override
 	public boolean useBlockPosSet() {
 		return true;
@@ -47,4 +55,5 @@ public class TileCropDetector extends TileBase implements ITickable {
 	public boolean useUUIDSet() {
 		return false;
 	}
+
 }

@@ -2,7 +2,7 @@ package mrriegel.detectors.block;
 
 import mrriegel.detectors.Detectors;
 import mrriegel.detectors.GuiHandler;
-import mrriegel.detectors.tile.TileCropDetector;
+import mrriegel.detectors.tile.TileBlockDetector;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,20 +13,20 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockCropDetector extends BlockBase {
+public class BlockBlockDetector extends BlockBase {
 
-	public BlockCropDetector() {
+	public BlockBlockDetector() {
 		super(Material.IRON);
 	}
 
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
-		return new TileCropDetector();
+		return new TileBlockDetector();
 	}
 
 	@Override
 	public String getName() {
-		return "cropDetector";
+		return "blockDetector";
 	}
 
 	@Override
@@ -37,10 +37,11 @@ public class BlockCropDetector extends BlockBase {
 		} else {
 			TileEntity tileentity = worldIn.getTileEntity(pos);
 
-			if (tileentity instanceof TileCropDetector) {
-				playerIn.openGui(Detectors.instance, GuiHandler.crop, worldIn, pos.getX(), pos.getY(), pos.getZ());
+			if (tileentity instanceof TileBlockDetector) {
+				playerIn.openGui(Detectors.instance, GuiHandler.block, worldIn, pos.getX(), pos.getY(), pos.getZ());
 			}
 			return true;
 		}
 	}
+
 }

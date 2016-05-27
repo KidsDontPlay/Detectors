@@ -1,0 +1,14 @@
+tile.detectors:cropDetector.name=Crop Detector
+
+item.detectors:linker.name=Linker
+
+tooltip.detectors.all_true=all
+tooltip.detectors.all_false=one
+tooltip.detectors.visible_true=visible
+tooltip.detectors.visible_false=invisible
+tooltip.detectors.kind_0=good
+tooltip.detectors.kind_1=evil
+tooltip.detectors.kind_2=any
+tooltip.detectors.range+=More Range
+tooltip.detectors.range-=Less Range
+

@@ -1,13 +1,11 @@
 package mrriegel.detectors;
 
 import mrriegel.detectors.item.ItemBase;
-import mrriegel.detectors.item.ItemEdit;
-import net.minecraft.item.Item;
+import mrriegel.detectors.item.ItemLinker;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 
 public class ModItems {
-	public static final ItemBase edit = new ItemEdit();
+	public static final ItemBase edit = new ItemLinker();
 
 	public static void init() {
 		GameRegistry.register(edit);

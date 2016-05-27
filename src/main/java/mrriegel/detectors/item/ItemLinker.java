@@ -1,17 +1,10 @@
 package mrriegel.detectors.item;
 
 import java.util.List;
-import java.util.Set;
-
-import com.google.common.collect.Sets;
 
 import mrriegel.detectors.Detectors;
 import mrriegel.detectors.tile.TileBase;
-import net.minecraft.block.IGrowable;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
@@ -20,10 +13,9 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.client.model.ModelLoader;
 
-public class ItemEdit extends ItemBase {
-	public ItemEdit() {
+public class ItemLinker extends ItemBase {
+	public ItemLinker() {
 		super();
 		this.setCreativeTab(Detectors.tab1);
 		this.setMaxStackSize(1);
@@ -53,7 +45,13 @@ public class ItemEdit extends ItemBase {
 		int dim = stack.getTagCompound().getInteger("dim");
 		if (worldIn.getTileEntity(t) instanceof TileBase && worldIn.provider.getDimension() == dim && !t.equals(pos) && t.getDistance(pos.getX(), pos.getY(), pos.getZ()) < 35) {
 			TileBase tile = (TileBase) worldIn.getTileEntity(t);
-			tile.getSet().add(pos);
+			if (tile.useBlockPosSet()) {
+				if (!tile.getBlockPosSet().contains(pos))
+					tile.getBlockPosSet().add(pos);
+				else
+					tile.getBlockPosSet().remove(pos);
+
+			}
 			tile.syncWithClient();
 		}
 		return EnumActionResult.SUCCESS;
@@ -70,7 +68,7 @@ public class ItemEdit extends ItemBase {
 
 	@Override
 	public String getName() {
-		return "edit";
+		return "linker";
 	}
 
 }

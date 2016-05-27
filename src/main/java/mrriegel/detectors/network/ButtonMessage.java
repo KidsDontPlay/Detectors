@@ -3,12 +3,9 @@ package mrriegel.detectors.network;
 import io.netty.buffer.ByteBuf;
 import mrriegel.detectors.gui.AbstractGui;
 import mrriegel.detectors.tile.TileBase;
-import net.minecraft.client.Minecraft;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldServer;
-import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -50,28 +47,39 @@ public class ButtonMessage implements IMessage {
 			((WorldServer) ctx.getServerHandler().playerEntity.worldObj).addScheduledTask(new Runnable() {
 				@Override
 				public void run() {
-					TileEntity tile = ctx.getServerHandler().playerEntity.worldObj.getTileEntity(message.pos);
-					if (tile instanceof TileBase) {
-						TileBase t = (TileBase) tile;
+					TileEntity t = ctx.getServerHandler().playerEntity.worldObj.getTileEntity(message.pos);
+					if (t instanceof TileBase) {
+						TileBase tile = (TileBase) t;
 						switch (message.id) {
-						case AbstractGui.plus:
-							t.setNumber(t.getNumber() + (message.shift ? 10 : 1));
+						case AbstractGui.PLUSRANGE:
+							tile.setRange(tile.getRange() + (message.shift ? 10 : 1));
 							break;
-						case AbstractGui.minus:
-							t.setNumber(t.getNumber() - (message.shift ? 10 : 1));
-							if (t.getNumber() < 0)
-								t.setNumber(0);
+						case AbstractGui.MINUSRANGE:
+							tile.setRange(tile.getRange() - (message.shift ? 10 : 1));
+							if (tile.getRange() < 0)
+								tile.setRange(0);
 							break;
-						case AbstractGui.all:
-							t.setAll(!t.isAll());
+						case AbstractGui.ALL:
+							tile.setAll(!tile.isAll());
 							break;
-						case AbstractGui.visible:
-							t.setVisible(!t.isVisible());
+						case AbstractGui.VISIBLE:
+							tile.setVisible(!tile.isVisible());
+							break;
+						case AbstractGui.MOB:
+							tile.setKind(tile.getKind().next());
+							break;
+						case AbstractGui.PLUSNUM:
+							tile.setNumber(tile.getNumber() + (message.shift ? 10 : 1));
+							break;
+						case AbstractGui.MINUSNUM:
+							tile.setNumber(tile.getNumber() - (message.shift ? 10 : 1));
+							if (tile.getNumber() < 0)
+								tile.setNumber(0);
 							break;
 						default:
 							break;
 						}
-//						t.syncWithClient();
+						tile.syncWithClient();
 					}
 				}
 			});
