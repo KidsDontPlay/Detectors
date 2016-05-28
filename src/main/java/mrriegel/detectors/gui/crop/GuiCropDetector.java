@@ -29,4 +29,15 @@ public class GuiCropDetector extends AbstractGui {
 		buttonList.add(plusNumButton);
 	}
 
+	@Override
+	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+		super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
+		String range = "" + tile.getRange();
+		if (minusRangeButton != null && plusRangeButton != null)
+			fontRendererObj.drawString(range, (132 - fontRendererObj.getStringWidth(range) / 2) + guiLeft, 16 + 6 + guiTop, 4210752);
+		String num = "" + tile.getNumber();
+		if (minusNumButton != null && plusNumButton != null)
+			fontRendererObj.drawString(num, (132 - fontRendererObj.getStringWidth(num) / 2) + guiLeft, 46 + 6 + guiTop, 4210752);
+	}
+
 }

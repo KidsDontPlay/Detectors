@@ -1,4 +1,6 @@
 tile.detectors:cropDetector.name=Crop Detector
+tile.detectors:blockDetector.name=Block Detector
+tile.detectors:rainDetector.name=Rain Detector
 
 item.detectors:linker.name=Linker
 
