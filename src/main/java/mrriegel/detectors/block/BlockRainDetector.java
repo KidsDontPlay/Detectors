@@ -6,11 +6,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockRainDetector extends BlockBase{
-
-	public BlockRainDetector() {
-		super(Material.IRON);
-	}
+public class BlockRainDetector extends BlockBase {
 
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {

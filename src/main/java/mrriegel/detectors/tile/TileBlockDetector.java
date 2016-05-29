@@ -3,6 +3,8 @@ package mrriegel.detectors.tile;
 import mrriegel.detectors.block.BlockBase;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.passive.EntityCow;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
@@ -39,9 +41,10 @@ public class TileBlockDetector extends TileBase implements ITickable {
 
 	private boolean stateEqual(IBlockState state) {
 		if (stack != null && stack.getItem() instanceof ItemBlock) {
-			Block in = ((ItemBlock) stack.getItem()).block;
-			IBlockState x = in.onBlockPlaced(worldObj, BlockPos.ORIGIN, EnumFacing.NORTH, 0, 0, 0, stack.getItem().getMetadata(stack.getItemDamage()), null);
-			return x.equals(state);
+			Block block = ((ItemBlock) stack.getItem()).block;
+			boolean metaEqual = stack.getItemDamage() == state.getBlock().damageDropped(state) && block == state.getBlock();
+			IBlockState x = block.onBlockPlaced(worldObj, BlockPos.ORIGIN, EnumFacing.NORTH, 0, 0, 0, stack.getItem().getMetadata(stack.getItemDamage()), new EntityCow(worldObj));
+			return x.equals(state) || metaEqual;
 		}
 		return false;
 	}

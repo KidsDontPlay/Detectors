@@ -21,8 +21,8 @@ import net.minecraftforge.client.model.ModelLoader;
 public abstract class BlockBase extends BlockContainer {
 	public static final PropertyBool STATE = PropertyBool.create("state");
 
-	public BlockBase(Material materialIn) {
-		super(materialIn);
+	public BlockBase() {
+		super(Material.IRON);
 		this.setHardness(2.0F);
 		this.setCreativeTab(Detectors.tab1);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(STATE, false));

@@ -2,7 +2,8 @@ package mrriegel.detectors.block;
 
 import mrriegel.detectors.Detectors;
 import mrriegel.detectors.GuiHandler;
-import mrriegel.detectors.tile.TileBlockDetector;
+import mrriegel.detectors.tile.TileAdultDetector;
+import mrriegel.detectors.tile.TileCropDetector;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,16 +14,16 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockBlockDetector extends BlockBase {
+public class BlockAdultDetector extends BlockBase {
 
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
-		return new TileBlockDetector();
+		return new TileAdultDetector();
 	}
 
 	@Override
 	public String getName() {
-		return "blockDetector";
+		return "adultDetector";
 	}
 
 	@Override
@@ -33,8 +34,8 @@ public class BlockBlockDetector extends BlockBase {
 		} else {
 			TileEntity tileentity = worldIn.getTileEntity(pos);
 
-			if (tileentity instanceof TileBlockDetector) {
-				playerIn.openGui(Detectors.instance, GuiHandler.block, worldIn, pos.getX(), pos.getY(), pos.getZ());
+			if (tileentity instanceof TileAdultDetector) {
+				playerIn.openGui(Detectors.instance, GuiHandler.adult, worldIn, pos.getX(), pos.getY(), pos.getZ());
 			}
 			return true;
 		}

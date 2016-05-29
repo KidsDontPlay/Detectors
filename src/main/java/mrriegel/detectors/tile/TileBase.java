@@ -4,6 +4,10 @@ import java.util.Set;
 import java.util.UUID;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.EntityCreature;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -30,6 +34,7 @@ public abstract class TileBase extends TileEntity {
 	protected int range = 6;
 	protected MobKind kind = MobKind.GOOD;
 	protected ItemStack stack;
+	protected Age age = Age.ADULT;
 
 	public enum MobKind {
 		GOOD, EVIL, BOTH;
@@ -38,6 +43,42 @@ public abstract class TileBase extends TileEntity {
 		public MobKind next() {
 			return vals[(this.ordinal() + 1) % vals.length];
 		}
+
+		public Class getClazz() {
+			switch (this) {
+			case GOOD:
+				return EntityAnimal.class;
+			case EVIL:
+				return EntityMob.class;
+			case BOTH:
+				return EntityCreature.class;
+			default:
+				return EntityLiving.class;
+			}
+		}
+	}
+
+	public enum Age {
+		ADULT, CHILD, BOTH;
+		private static Age[] vals = values();
+
+		public Age next() {
+			return vals[(this.ordinal() + 1) % vals.length];
+		}
+
+		public boolean match(EntityCreature e) {
+			switch (this) {
+			case ADULT:
+				return !e.isChild();
+			case CHILD:
+				return e.isChild();
+			case BOTH:
+				return true;
+			default:
+				return false;
+			}
+		}
+
 	}
 
 	@Override
@@ -78,6 +119,7 @@ public abstract class TileBase extends TileEntity {
 			this.stack = ItemStack.loadItemStackFromNBT(compound.getCompoundTag("stack"));
 		else
 			this.stack = null;
+		this.age = Age.valueOf(compound.getString("age"));
 	}
 
 	@Override
@@ -101,6 +143,7 @@ public abstract class TileBase extends TileEntity {
 			stack.writeToNBT(tag);
 			compound.setTag("stack", tag);
 		}
+		compound.setString("age", age.toString());
 	}
 
 	public void deserializeSyncNBT(NBTTagCompound nbt) {
@@ -205,5 +248,13 @@ public abstract class TileBase extends TileEntity {
 
 	public void setStack(ItemStack stack) {
 		this.stack = stack;
+	}
+
+	public Age getAge() {
+		return age;
+	}
+
+	public void setAge(Age age) {
+		this.age = age;
 	}
 }

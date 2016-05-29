@@ -1,17 +1,17 @@
-package mrriegel.detectors.gui.block;
+package mrriegel.detectors.gui.item;
 
-import mrriegel.detectors.gui.AbstractContainer;
-import mrriegel.detectors.tile.TileBase;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryBasic;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import mrriegel.detectors.gui.AbstractContainer;
+import mrriegel.detectors.tile.TileBase;
 
-public class ContainerBlockDetector extends AbstractContainer {
+public class ContainerItemDetector extends AbstractContainer {
 
-	public ContainerBlockDetector(final TileBase tile, InventoryPlayer playerInv) {
+	public ContainerItemDetector(final TileBase tile, InventoryPlayer playerInv) {
 		super(tile, playerInv);
 		IInventory inv = new InventoryBasic(null, false, 1);
 		inv.setInventorySlotContents(0, tile.getStack());
@@ -27,11 +27,6 @@ public class ContainerBlockDetector extends AbstractContainer {
 			@Override
 			public int getSlotStackLimit() {
 				return 1;
-			}
-
-			@Override
-			public boolean isItemValid(ItemStack stack) {
-				return stack != null && stack.getItem() instanceof ItemBlock;
 			}
 		};
 		this.addSlotToContainer(x);

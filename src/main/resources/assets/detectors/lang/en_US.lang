@@ -1,16 +1,22 @@
 tile.detectors:cropDetector.name=Crop Detector
 tile.detectors:blockDetector.name=Block Detector
 tile.detectors:rainDetector.name=Rain Detector
+tile.detectors:mobDetector.name=Mob Detector
 
 item.detectors:linker.name=Linker
 
-tooltip.detectors.all_true=all
-tooltip.detectors.all_false=one
-tooltip.detectors.visible_true=visible
-tooltip.detectors.visible_false=invisible
-tooltip.detectors.kind_0=good
-tooltip.detectors.kind_1=evil
-tooltip.detectors.kind_2=any
-tooltip.detectors.range+=More Range
-tooltip.detectors.range-=Less Range
+tooltip.detectors.all_true=Every
+tooltip.detectors.all_false=At least one
+tooltip.detectors.visible_true=Visible
+tooltip.detectors.visible_false=Not Visible
+tooltip.detectors.kind_0=Good
+tooltip.detectors.kind_1=Evil
+tooltip.detectors.kind_2=Any
+tooltip.detectors.age_0=Adult
+tooltip.detectors.age_1=Child
+tooltip.detectors.age_2=Any
+tooltip.detectors.range+=+ Range
+tooltip.detectors.range-=- Range
+tooltip.detectors.num+=+ Amount
+tooltip.detectors.num-=- Amount
 

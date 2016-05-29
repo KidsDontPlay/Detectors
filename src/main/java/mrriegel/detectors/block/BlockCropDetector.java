@@ -15,10 +15,6 @@ import net.minecraft.world.World;
 
 public class BlockCropDetector extends BlockBase {
 
-	public BlockCropDetector() {
-		super(Material.IRON);
-	}
-
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
 		return new TileCropDetector();

@@ -9,18 +9,19 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 
-public class TileAnimalChecker extends TileBase implements ITickable {
+public class TileAdultDetector extends TileBase implements ITickable {
 
 	@Override
 	public void update() {
 		if (worldObj.isRemote || worldObj.getTotalWorldTime() % 5 != 0)
 			return;
 		boolean on = true;
-		List<EntityAgeable> lis = worldObj.getEntitiesWithinAABB(EntityAgeable.class, new AxisAlignedBB(pos.add(number, number, number), pos.add(-number, -number, -number)));
+		List<EntityAgeable> lis = worldObj.getEntitiesWithinAABB(EntityAgeable.class, new AxisAlignedBB(pos.add(range+.5, range+.5, range+.5), pos.add(-range+.5, -range+.5, -range+.5)));
 		if (lis.isEmpty())
 			on = false;
-		for (EntityAgeable p : lis)
-			p.addPotionEffect(new PotionEffect(Potion.getPotionById(24), 8, 0));
+		if (visible)
+			for (EntityAgeable p : lis)
+				p.addPotionEffect(new PotionEffect(Potion.getPotionById(24), 8, 0));
 		for (EntityAgeable p : lis) {
 			if (all && p.isChild()) {
 				on = false;
