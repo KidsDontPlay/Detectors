@@ -4,6 +4,7 @@ import mrriegel.detectors.block.BlockAdultDetector;
 import mrriegel.detectors.block.BlockBase;
 import mrriegel.detectors.block.BlockBlockDetector;
 import mrriegel.detectors.block.BlockCropDetector;
+import mrriegel.detectors.block.BlockFluidDetector;
 import mrriegel.detectors.block.BlockItemDetector;
 import mrriegel.detectors.block.BlockMobDetector;
 import mrriegel.detectors.block.BlockRainDetector;
@@ -17,23 +18,26 @@ public class ModBlocks {
 	public static final BlockBase rain = new BlockRainDetector();
 	public static final BlockBase mob = new BlockMobDetector();
 	public static final BlockBase item = new BlockItemDetector();
+	public static final BlockBase fluid = new BlockFluidDetector();
 
 	public static void init() {
 		register(crop);
-		register(adult);
+		// register(adult);
 		register(block);
 		register(rain);
 		register(mob);
 		register(item);
+		register(fluid);
 	}
 
 	public static void initModels() {
 		crop.initModel();
-		adult.initModel();
+		// adult.initModel();
 		block.initModel();
 		rain.initModel();
 		mob.initModel();
 		item.initModel();
+		fluid.initModel();
 	}
 
 	private static void register(BlockBase block) {

@@ -3,7 +3,6 @@ package mrriegel.detectors.block;
 import mrriegel.detectors.Detectors;
 import mrriegel.detectors.GuiHandler;
 import mrriegel.detectors.tile.TileCropDetector;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;

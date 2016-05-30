@@ -2,7 +2,6 @@ package mrriegel.detectors.gui.block;
 
 import mrriegel.detectors.gui.AbstractContainer;
 import mrriegel.detectors.gui.AbstractGui;
-import net.minecraft.client.gui.GuiButton;
 
 public class GuiBlockDetector extends AbstractGui {
 
@@ -19,7 +18,7 @@ public class GuiBlockDetector extends AbstractGui {
 	@Override
 	public void initGui() {
 		super.initGui();
-		initButtons(ALL,VISIBLE);
+		initButtons(ALL, VISIBLE);
 	}
 
 }

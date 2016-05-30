@@ -16,10 +16,10 @@ import com.google.common.collect.Lists;
 
 public class AbstractGui extends GuiContainer {
 
-	public static final int PLUSRANGE = 0, MINUSRANGE = 1, ALL = 2, VISIBLE = 3, MOB = 4, PLUSNUM = 5, MINUSNUM = 6, AGE = 7;
+	public static final int PLUSRANGE = 0, MINUSRANGE = 1, ALL = 2, VISIBLE = 3, MOB = 4, PLUSNUM = 5, MINUSNUM = 6, AGE = 7, OP = 8;
 
 	protected static final ResourceLocation GuiTextures = new ResourceLocation(Detectors.MODID + ":textures/gui/gui.png");
-	protected GuiButton plusRangeButton, minusRangeButton, allButton, visibleButton, mobButton, plusNumButton, minusNumButton, ageButton;
+	protected GuiButton plusRangeButton, minusRangeButton, allButton, visibleButton, mobButton, plusNumButton, minusNumButton, ageButton, opButton;
 	protected TileBase tile;
 
 	public AbstractGui(AbstractContainer container) {
@@ -42,6 +42,8 @@ public class AbstractGui extends GuiContainer {
 			this.drawTexturedModalRect(mobButton.xPosition - guiLeft, mobButton.yPosition - guiTop, 176 + (tile.getKind().ordinal() * 20), 58, 20, 20);
 		if (ageButton != null)
 			this.drawTexturedModalRect(ageButton.xPosition - guiLeft, ageButton.yPosition - guiTop, 176 + (tile.getAge().ordinal() * 20), 78, 20, 20);
+		if (opButton != null)
+			opButton.displayString = tile.getOp().sym();
 
 		if (plusRangeButton != null && plusRangeButton.isMouseOver())
 			drawHoveringText(Lists.newArrayList(I18n.format("tooltip.detectors.range+")), mouseX - guiLeft, mouseY - guiTop);
@@ -121,6 +123,10 @@ public class AbstractGui extends GuiContainer {
 				ageButton = new GuiButton(AGE, guiLeft + 32, guiTop + 46, 20, 20, "");
 				buttonList.add(ageButton);
 				break;
+			case AbstractGui.OP:
+				opButton = new GuiButton(OP, guiLeft + 57, guiTop + 16, 20, 20, "");
+				buttonList.add(opButton);
+				break;
 			default:
 				break;
 			}
@@ -157,6 +163,9 @@ public class AbstractGui extends GuiContainer {
 			break;
 		case AbstractGui.AGE:
 			tile.setAge(tile.getAge().next());
+			break;
+		case AbstractGui.OP:
+			tile.setOp(tile.getOp().next());
 			break;
 		default:
 			break;

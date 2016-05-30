@@ -1,13 +1,11 @@
 package mrriegel.detectors.gui.item;
 
+import mrriegel.detectors.gui.AbstractContainer;
+import mrriegel.detectors.tile.TileBase;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryBasic;
 import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
-import mrriegel.detectors.gui.AbstractContainer;
-import mrriegel.detectors.tile.TileBase;
 
 public class ContainerItemDetector extends AbstractContainer {
 

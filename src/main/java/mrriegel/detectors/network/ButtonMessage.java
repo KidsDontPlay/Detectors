@@ -79,6 +79,9 @@ public class ButtonMessage implements IMessage {
 						case AbstractGui.AGE:
 							tile.setAge(tile.getAge().next());
 							break;
+						case AbstractGui.OP:
+							tile.setOp(tile.getOp().next());
+							break;
 						default:
 							break;
 						}

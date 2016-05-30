@@ -2,7 +2,6 @@ package mrriegel.detectors.gui.crop;
 
 import mrriegel.detectors.gui.AbstractContainer;
 import mrriegel.detectors.gui.AbstractGui;
-import net.minecraft.client.gui.GuiButton;
 
 public class GuiCropDetector extends AbstractGui {
 
@@ -13,7 +12,7 @@ public class GuiCropDetector extends AbstractGui {
 	@Override
 	public void initGui() {
 		super.initGui();
-		initButtons(ALL,VISIBLE);
+		initButtons(ALL, VISIBLE);
 	}
 
 }

@@ -18,7 +18,7 @@ public class GuiItemDetector extends AbstractGui {
 	@Override
 	public void initGui() {
 		super.initGui();
-		initButtons(VISIBLE, PLUSNUM, MINUSNUM);
+		initButtons(VISIBLE, PLUSNUM, MINUSNUM, OP);
 	}
 
 }

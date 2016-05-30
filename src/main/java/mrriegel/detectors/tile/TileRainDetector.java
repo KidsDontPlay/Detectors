@@ -1,10 +1,7 @@
 package mrriegel.detectors.tile;
 
 import mrriegel.detectors.block.BlockBase;
-import net.minecraft.block.Block;
-import net.minecraft.block.IGrowable;
 import net.minecraft.util.ITickable;
-import net.minecraft.util.math.BlockPos;
 
 public class TileRainDetector extends TileBase implements ITickable {
 

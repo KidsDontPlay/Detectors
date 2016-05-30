@@ -1,5 +1,6 @@
 package mrriegel.detectors.proxy;
 
+import mrriegel.detectors.CraftingRecipes;
 import mrriegel.detectors.Detectors;
 import mrriegel.detectors.GuiHandler;
 import mrriegel.detectors.ModBlocks;
@@ -15,6 +16,7 @@ public class CommonProxy {
 	public void preInit(FMLPreInitializationEvent event) {
 		ModBlocks.init();
 		ModItems.init();
+		CraftingRecipes.init();
 	}
 
 	public void init(FMLInitializationEvent event) {

@@ -1,5 +1,7 @@
 package mrriegel.detectors.tile;
 
+import java.util.Set;
+
 import mrriegel.detectors.block.BlockBase;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -8,6 +10,8 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+
+import com.google.common.collect.Sets;
 
 public class TileItemDetector extends TileBase implements ITickable {
 
@@ -18,7 +22,7 @@ public class TileItemDetector extends TileBase implements ITickable {
 		int num = 0;
 		for (BlockPos pos : blockPosSet)
 			num += inInventory(stack, pos);
-		boolean x = num >= number;
+		boolean x = op.match(num, number);
 		if (worldObj.getBlockState(pos).getValue(BlockBase.STATE).booleanValue() != x) {
 			((BlockBase) worldObj.getBlockState(pos).getBlock()).setState(worldObj, pos, worldObj.getBlockState(pos), x);
 			syncWithClient();
@@ -47,14 +51,16 @@ public class TileItemDetector extends TileBase implements ITickable {
 					res += inv.getStackInSlot(i).stackSize;
 			return res;
 		}
-		if (worldObj.getTileEntity(pos).hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP)) {
-			int res = 0;
-			IItemHandler inv = worldObj.getTileEntity(pos).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
+		int res = 0;
+		Set<IItemHandler> set = Sets.newCopyOnWriteArraySet();
+		for (EnumFacing f : EnumFacing.values())
+			if (worldObj.getTileEntity(pos).hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, f))
+				set.add(worldObj.getTileEntity(pos).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, f));
+		for (IItemHandler inv : set)
 			for (int i = 0; i < inv.getSlots(); i++)
 				if (stack.isItemEqual(inv.getStackInSlot(i)))
 					res += inv.getStackInSlot(i).stackSize;
-			return res;
-		}
-		return 0;
+
+		return res;
 	}
 }

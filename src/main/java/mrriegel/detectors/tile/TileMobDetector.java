@@ -4,9 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import mrriegel.detectors.block.BlockBase;
-import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityCreature;
-import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ITickable;
@@ -30,7 +28,7 @@ public class TileMobDetector extends TileBase implements ITickable {
 		if (visible)
 			for (EntityCreature p : lis)
 				p.addPotionEffect(new PotionEffect(Potion.getPotionById(24), 8, 0));
-		boolean on = lis.size() >= number;
+		boolean on = op.match(lis.size(), number);
 		if (worldObj.getBlockState(pos).getValue(BlockBase.STATE).booleanValue() != on) {
 			((BlockBase) worldObj.getBlockState(pos).getBlock()).setState(worldObj, pos, worldObj.getBlockState(pos), on);
 			syncWithClient();

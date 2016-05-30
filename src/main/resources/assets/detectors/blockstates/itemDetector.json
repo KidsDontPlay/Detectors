@@ -1,0 +1,32 @@
+{
+    "forge_marker":1,
+    "defaults":{
+        "model":"detectors:updown",
+        "textures":{
+            "side":"detectors:blocks/item_off_side",
+            "up":"detectors:blocks/machine_off_up",
+            "down":"detectors:blocks/machine_off_down"
+        }
+    },
+    "variants":{
+        "normal":[{
+                
+            }],
+        "inventory":[{
+                "transform":"forge:default-block",
+                "y":0
+            }],
+        "state":{
+            "false":{
+                
+            },
+            "true":{
+                "textures":{
+                    "side":"detectors:blocks/item_on_side",
+                    "up":"detectors:blocks/machine_on_up",
+                    "down":"detectors:blocks/machine_on_down"
+                }
+            }
+        }
+    }
+}

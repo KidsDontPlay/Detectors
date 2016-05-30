@@ -1,6 +1,5 @@
 package mrriegel.detectors.gui.adult;
 
-import net.minecraft.client.gui.GuiButton;
 import mrriegel.detectors.gui.AbstractContainer;
 import mrriegel.detectors.gui.AbstractGui;
 

@@ -1,9 +1,6 @@
 package mrriegel.detectors;
 
 import mrriegel.detectors.proxy.CommonProxy;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -26,18 +23,6 @@ public class Detectors {
 
 	@SidedProxy(clientSide = "mrriegel.detectors.proxy.ClientProxy", serverSide = "mrriegel.detectors.proxy.CommonProxy")
 	public static CommonProxy proxy;
-
-	public static CreativeTabs tab1 = new CreativeTabs(Detectors.MODID) {
-		@Override
-		public Item getTabIconItem() {
-			return Item.getItemFromBlock(Blocks.PUMPKIN);
-		}
-
-		@Override
-		public String getTranslatedTabLabel() {
-			return Detectors.MODNAME;
-		}
-	};
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {

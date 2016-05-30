@@ -2,6 +2,8 @@ tile.detectors:cropDetector.name=Crop Detector
 tile.detectors:blockDetector.name=Block Detector
 tile.detectors:rainDetector.name=Rain Detector
 tile.detectors:mobDetector.name=Mob Detector
+tile.detectors:itemDetector.name=Item Detector
+tile.detectors:fluidDetector.name=Fluid Detector
 
 item.detectors:linker.name=Linker
 
@@ -19,4 +21,13 @@ tooltip.detectors.range+=+ Range
 tooltip.detectors.range-=- Range
 tooltip.detectors.num+=+ Amount
 tooltip.detectors.num-=- Amount
+
+tooltip.detectors:linker=Right click a detector to bind it to the linker. Now click the blocks you want to select. Right click the air to reset it.
+
+tooltip.detectors:cropDetector=Detects if selected crops are mature.
+tooltip.detectors:blockDetector=Detects if selected blocks are identical with specified item.
+tooltip.detectors:rainDetector=Detects if it is raining.
+tooltip.detectors:mobDetector=Detects if there are mobs around.
+tooltip.detectors:itemDetector=Detects if specified item is in selected Inventories.
+tooltip.detectors:fluidDetector=Detects if specified fluid is in selected Tanks.
 

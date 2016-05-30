@@ -2,7 +2,6 @@ package mrriegel.detectors.block;
 
 import mrriegel.detectors.Detectors;
 import mrriegel.detectors.GuiHandler;
-import mrriegel.detectors.tile.TileCropDetector;
 import mrriegel.detectors.tile.TileMobDetector;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,7 +12,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockMobDetector extends BlockBase{
+public class BlockMobDetector extends BlockBase {
 
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
@@ -24,7 +23,7 @@ public class BlockMobDetector extends BlockBase{
 	public String getName() {
 		return "mobDetector";
 	}
-	
+
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
 		if (worldIn.isRemote) {

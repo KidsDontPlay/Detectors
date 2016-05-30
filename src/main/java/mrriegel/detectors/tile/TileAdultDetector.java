@@ -16,7 +16,7 @@ public class TileAdultDetector extends TileBase implements ITickable {
 		if (worldObj.isRemote || worldObj.getTotalWorldTime() % 5 != 0)
 			return;
 		boolean on = true;
-		List<EntityAgeable> lis = worldObj.getEntitiesWithinAABB(EntityAgeable.class, new AxisAlignedBB(pos.add(range+.5, range+.5, range+.5), pos.add(-range+.5, -range+.5, -range+.5)));
+		List<EntityAgeable> lis = worldObj.getEntitiesWithinAABB(EntityAgeable.class, new AxisAlignedBB(pos.add(range + .5, range + .5, range + .5), pos.add(-range + .5, -range + .5, -range + .5)));
 		if (lis.isEmpty())
 			on = false;
 		if (visible)

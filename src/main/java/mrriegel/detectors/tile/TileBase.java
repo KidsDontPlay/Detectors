@@ -35,13 +35,13 @@ public abstract class TileBase extends TileEntity {
 	protected MobKind kind = MobKind.GOOD;
 	protected ItemStack stack;
 	protected Age age = Age.ADULT;
+	protected Operation op = Operation.GREATER;
 
 	public enum MobKind {
 		GOOD, EVIL, BOTH;
-		private static MobKind[] vals = values();
 
 		public MobKind next() {
-			return vals[(this.ordinal() + 1) % vals.length];
+			return values()[(this.ordinal() + 1) % values().length];
 		}
 
 		public Class getClazz() {
@@ -60,10 +60,9 @@ public abstract class TileBase extends TileEntity {
 
 	public enum Age {
 		ADULT, CHILD, BOTH;
-		private static Age[] vals = values();
 
 		public Age next() {
-			return vals[(this.ordinal() + 1) % vals.length];
+			return values()[(this.ordinal() + 1) % values().length];
 		}
 
 		public boolean match(EntityCreature e) {
@@ -74,6 +73,41 @@ public abstract class TileBase extends TileEntity {
 				return e.isChild();
 			case BOTH:
 				return true;
+			default:
+				return false;
+			}
+		}
+
+	}
+
+	public enum Operation {
+		GREATER, LESS, EQUALS;
+
+		public Operation next() {
+			return values()[(this.ordinal() + 1) % values().length];
+		}
+
+		public String sym() {
+			switch (this) {
+			case GREATER:
+				return ">=";
+			case LESS:
+				return "<=";
+			case EQUALS:
+				return "==";
+			default:
+				return "";
+			}
+		}
+
+		public boolean match(int a, int b) {
+			switch (this) {
+			case GREATER:
+				return a >= b;
+			case LESS:
+				return a <= b;
+			case EQUALS:
+				return a == b;
 			default:
 				return false;
 			}
@@ -120,6 +154,7 @@ public abstract class TileBase extends TileEntity {
 		else
 			this.stack = null;
 		this.age = Age.valueOf(compound.getString("age"));
+		this.op = Operation.valueOf(compound.getString("op"));
 	}
 
 	@Override
@@ -144,6 +179,7 @@ public abstract class TileBase extends TileEntity {
 			compound.setTag("stack", tag);
 		}
 		compound.setString("age", age.toString());
+		compound.setString("op", op.toString());
 	}
 
 	public void deserializeSyncNBT(NBTTagCompound nbt) {
@@ -256,5 +292,13 @@ public abstract class TileBase extends TileEntity {
 
 	public void setAge(Age age) {
 		this.age = age;
+	}
+
+	public Operation getOp() {
+		return op;
+	}
+
+	public void setOp(Operation op) {
+		this.op = op;
 	}
 }

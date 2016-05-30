@@ -1,6 +1,8 @@
 package mrriegel.detectors.block;
 
-import mrriegel.detectors.Detectors;
+import java.util.List;
+
+import mrriegel.detectors.CreativeTab;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -8,8 +10,11 @@ import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
@@ -24,7 +29,7 @@ public abstract class BlockBase extends BlockContainer {
 	public BlockBase() {
 		super(Material.IRON);
 		this.setHardness(2.0F);
-		this.setCreativeTab(Detectors.tab1);
+		this.setCreativeTab(CreativeTab.tab1);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(STATE, false));
 		this.setRegistryName(getName());
 		this.setUnlocalizedName(getRegistryName().toString());
@@ -80,6 +85,11 @@ public abstract class BlockBase extends BlockContainer {
 
 	public void initModel() {
 		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
+	}
+
+	@Override
+	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
+		tooltip.add(I18n.format("tooltip." + getRegistryName().toString()));
 	}
 
 }
