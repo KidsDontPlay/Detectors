@@ -12,6 +12,8 @@ import mrriegel.detectors.gui.item.ContainerItemDetector;
 import mrriegel.detectors.gui.item.GuiItemDetector;
 import mrriegel.detectors.gui.mob.ContainerMobDetector;
 import mrriegel.detectors.gui.mob.GuiMobDetector;
+import mrriegel.detectors.gui.player.ContainerPlayerDetector;
+import mrriegel.detectors.gui.player.GuiPlayerDetector;
 import mrriegel.detectors.tile.TileBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
@@ -26,6 +28,7 @@ public class GuiHandler implements IGuiHandler {
 	public static final int mob = tmp++;
 	public static final int item = tmp++;
 	public static final int fluid = tmp++;
+	public static final int player = tmp++;
 
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -46,6 +49,9 @@ public class GuiHandler implements IGuiHandler {
 		}
 		if (ID == fluid) {
 			return new ContainerFluidDetector((TileBase) world.getTileEntity(new BlockPos(x, y, z)), player.inventory);
+		}
+		if (ID == GuiHandler.player) {
+			return new ContainerPlayerDetector((TileBase) world.getTileEntity(new BlockPos(x, y, z)), player.inventory);
 		}
 		return null;
 	}
@@ -69,6 +75,9 @@ public class GuiHandler implements IGuiHandler {
 		}
 		if (ID == fluid) {
 			return new GuiFluidDetector(new ContainerFluidDetector((TileBase) world.getTileEntity(new BlockPos(x, y, z)), player.inventory));
+		}
+		if (ID == GuiHandler.player) {
+			return new GuiPlayerDetector(new ContainerPlayerDetector((TileBase) world.getTileEntity(new BlockPos(x, y, z)), player.inventory));
 		}
 		return null;
 	}

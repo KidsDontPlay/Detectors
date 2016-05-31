@@ -7,6 +7,7 @@ import mrriegel.detectors.block.BlockCropDetector;
 import mrriegel.detectors.block.BlockFluidDetector;
 import mrriegel.detectors.block.BlockItemDetector;
 import mrriegel.detectors.block.BlockMobDetector;
+import mrriegel.detectors.block.BlockPlayerDetector;
 import mrriegel.detectors.block.BlockRainDetector;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -19,6 +20,7 @@ public class ModBlocks {
 	public static final BlockBase mob = new BlockMobDetector();
 	public static final BlockBase item = new BlockItemDetector();
 	public static final BlockBase fluid = new BlockFluidDetector();
+	public static final BlockBase player = new BlockPlayerDetector();
 
 	public static void init() {
 		register(crop);
@@ -28,6 +30,7 @@ public class ModBlocks {
 		register(mob);
 		register(item);
 		register(fluid);
+		register(player);
 	}
 
 	public static void initModels() {
@@ -38,6 +41,7 @@ public class ModBlocks {
 		mob.initModel();
 		item.initModel();
 		fluid.initModel();
+		player.initModel();
 	}
 
 	private static void register(BlockBase block) {

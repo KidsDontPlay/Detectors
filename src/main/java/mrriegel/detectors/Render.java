@@ -58,11 +58,13 @@ public class Render {
 
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(-doubleX, -doubleY, -doubleZ);
+		GlStateManager.pushAttrib();
 		if (player.isSneaking())
 			GL11.glDisable(GL11.GL_DEPTH_TEST);
 		renderCubes(positions, offset, r, g, b, .6f);
 		GlStateManager.disableBlend();
 		renderOutlines(positions, 1.5f, offset + 0.001f, 0f, 0f, 0f, 1f);
+		GlStateManager.popAttrib();
 
 		// get around vanilla minecraft opengl bug by resetting attribs pre-pop
 		GlStateManager.enableTexture2D();

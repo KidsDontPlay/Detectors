@@ -4,6 +4,7 @@ tile.detectors:rainDetector.name=Rain Detector
 tile.detectors:mobDetector.name=Mob Detector
 tile.detectors:itemDetector.name=Item Detector
 tile.detectors:fluidDetector.name=Fluid Detector
+tile.detectors:playerDetector.name=Player Detector
 
 item.detectors:linker.name=Linker
 
@@ -30,4 +31,5 @@ tooltip.detectors:rainDetector=Detects if it is raining.
 tooltip.detectors:mobDetector=Detects if there are mobs around.
 tooltip.detectors:itemDetector=Detects if specified item is in selected Inventories.
 tooltip.detectors:fluidDetector=Detects if specified fluid is in selected Tanks.
+tooltip.detectors:playerDetector=Detects if there are players around.
 
